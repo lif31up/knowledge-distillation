@@ -10,7 +10,6 @@ class ResNet(nn.Module):
     self.flatten = nn.Flatten(start_dim=1)
     self.convs = self._get_convs(self.config.n_convs)
     self.pool = nn.MaxPool2d(2, 2)
-    self._get_pa_resblock_norm(self.config.dummy)
     self.fc = self._get_fc(self.config.dummy)
   # __init__
 
@@ -25,12 +24,14 @@ class ResNet(nn.Module):
   def _get_fc(self, dummy):
     for conv in self.convs: dummy = conv(dummy)
     dummy = self.pool(dummy)
+    dummy = dummy.flatten(0)
     return nn.Linear(in_features=dummy.shape[0], out_features=self.config.out_features, bias=self.config.bias)
   # _get_fc
 
   def forward(self, x):
     for conv in self.convs: x = conv(x)
     x = self.pool(x)
+    x = self.flatten(x)
     return self.fc(x)
   # forward
 # ResNet
@@ -45,7 +46,6 @@ class PA_ResBlock(nn.Module):
   # __init__
 
   def forward(self, x):
-    x = self.norm(x)
     x = self.act(x)
     x = self.conv(x)
     x = self.dp(x)
