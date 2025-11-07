@@ -3,8 +3,9 @@ from tqdm import tqdm
 
 
 class DistillDataset(Dataset):
-  def __init__(self, dataset, represent):
+  def __init__(self, dataset, represent, distill=False):
     super(DistillDataset, self).__init__()
+    self.distill = distill
     self.dataset, self.represent = dataset, represent
     self.x, self.y = list(), list()
     self.is_consolidate = False
@@ -26,9 +27,6 @@ class DistillDataset(Dataset):
 
 if __name__ == "__main__":
   from config import Config
-  config = Config()
-  trainset = DistillDataset(dataset=config.trainset, represent=config.represent).consolidate()
-  for feature, label in trainset:
-    print(f'{feature, label}')
-    break
+  config = Config(is_teacher=True)
+  print(f'{config.dummy[0]}')
 # if __name__ == "__main__"

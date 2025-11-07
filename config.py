@@ -1,13 +1,25 @@
 import torch
 import torchvision as tv
-from torchvision.models import resnet50
-from huggingface_hub import hf_hub_download
+from torch import nn
 
 
 class Config:
-  def __init__(self):
+  def __init__(self, is_teacher=False):
     self.save_to = "./model.bin"
 
+    self.is_teacher = is_teacher  # to train a teacher True else False
+    if not self.is_teacher:
+      self.model = torch.load('some_path')
+      self.represent = lambda x: softoward(x=x, model=self.model, temperature=self.temperature)
+    # if not self.is_teacher
+
+    self.iters = 40
+
+    self.in_channels = 3
+    self.hidden_channels = 32
+    self.out_features = 10
+
+    self.act = nn.SiLU()
     self.bias = True
     self.n_convs = True
     self.dropout = 0.1
@@ -21,24 +33,14 @@ class Config:
     self.init_weights = init_weights
     self.temperature = 4.0
 
-    self.repo_id = "edadaltocg/resnet50_cifar10"
-    self.load_from = "./pytorch_model.bin"
-    hf_hub_download(repo_id=self.repo_id, filename=self.load_from)
-
-    self.model = resnet50(weights=None)
-    num_ftrs = self.model.fc.in_features
-    self.model.fc = torch.nn.Linear(num_ftrs, 10)
-    self.model.load_state_dict(torch.load(self.load_from, map_location=lambda storage, loc: storage))
-
     self.transform = tv.transforms.Compose([
       tv.transforms.Resize((28, 28)),
       tv.transforms.ToTensor(),
       tv.transforms.Normalize(mean=[0.5], std=[0.5]),
     ]) # transform
-    self.represent = lambda x: softoward(x=x, model=self.model, temperature=self.temperature)
-
     self.trainset = tv.datasets.CIFAR10(root='./data', train=True, download=True, transform=self.transform)
     self.testset = tv.datasets.CIFAR10(root='./data', train=False, download=True, transform=self.transform)
+    self.dummy = self.testset[0][0]
   # __init__
 # Config
 
@@ -57,8 +59,4 @@ def init_weights(m):
 if __name__ == "__main__":
   config = Config()
   dataset = torch.utils.data.DataLoader(config.trainset, batch_size=config.batch_size, shuffle=True)
-  for feature, label in dataset:
-    print(f'{config.model(feature)}')
-    continue
-  # for
 # if __name__ == "__main__":
