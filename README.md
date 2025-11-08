@@ -4,7 +4,7 @@ This implementation is inspired by:
 
 Distillation (or Knowledge Distillation) is a model compression technique where a small model is trained to mimic a large, complex model by learning its "thought process (or soft probabilities)". Most large state-of-the-art models are incredibly accurate but come with high costs—computation, memory, and latency. Distillation captures the knowledge inside those models and packs it into a more efficient one.
 
-- **Task:** classifying image with few dataset.
+- **Task:** Image Recognition
 - **Dataset:** CIFAR-10
 
 
