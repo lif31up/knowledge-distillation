@@ -1,25 +1,27 @@
 from torch.utils.data import Dataset
 from tqdm import tqdm
+from config import Config
 
 
 class DistillDataset(Dataset):
-  def __init__(self, dataset, represent, distill=False):
+  def __init__(self, dataset, teacher, config: Config):
     super(DistillDataset, self).__init__()
-    self.distill = distill
-    self.dataset, self.represent = dataset, represent
-    self.x, self.y = list(), list()
+    self.config = config
+    self.dataset, self.teacher = dataset, teacher
     self.is_consolidate = False
+    self.y = list()
   # __init__
 
   def __len__(self): return len(self.y)
-  def __getitem__(self, item): return self.x[item], self.y[item]
+  def __getitem__(self, item): return self.dataset[item][0], self.y[item]
 
   def consolidate(self):
-    progression = tqdm(self.dataset)
+    self.teacher.eval()
+    progression = tqdm(range(self.config.softset_len))
     for feature, label in progression:
-      label = (self.represent(feature), label)
-      self.x.append(feature)
-      self.y.append(label)
+      soft_label = self.teacher(feature)
+      self.y.append((soft_label, label))
+    # for feature label
     self.is_consolidate = True
     return self
   # consolidate

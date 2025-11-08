@@ -32,6 +32,7 @@ class Config:
     self.mask_prob = 0.3
     self.init_weights = init_weights
     self.temperature = 4.0
+    self.softset_len = 100
 
     self.transform = tv.transforms.Compose([
       tv.transforms.Resize((28, 28)),
