@@ -9,7 +9,7 @@ Distillation (or Knowledge Distillation) is a model compression technique where 
 The Vision Transformer (ViT) attains excellent results when pretrained at sufficient scale and transferred to tasks with fewer datapoints. When pretrained on the public ImageNet-21k dataset or the in-house JFT-300M dataset, ViT approaches or beats state-of-the-art image recognition benchmarks.
 
 - **Task:** Image Recognition
-- **Dataset:** MNIST-10
+- **Dataset:** MNIST
 
 ### Experiment on CoLab
 <a href="https://colab.research.google.com/drive/1l5MhNUO0_pNpVZSrC9G43yH5vlfwg6Gh?usp=sharing">
