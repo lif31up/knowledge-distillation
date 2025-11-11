@@ -13,17 +13,21 @@ class Config:
     self.iters = 40
     self.batch_size = 16
     self.dataset_len, self.testset_len = 1000, 500
+    self.dummy = None
 
-    self.in_channels = 3
-    self.hidden_channels = 32
-    self.out_features = 10
-
-    self.act = nn.SiLU()
+    self.n_heads = 32
+    self.n_stacks = 6
+    self.n_hidden = 3
+    self.dim = 16875
+    self.output_dim = 2
     self.bias = True
+
     self.dropout = 0.1
+    self.attention_dropout = 0.1
     self.eps = 1e-3
     self.betas = (0.9, 0.98)
     self.epochs = 5
+    self.batch_size = 16
     self.lr = 1e-4
     self.clip_grad = False
     self.mask_prob = 0.3

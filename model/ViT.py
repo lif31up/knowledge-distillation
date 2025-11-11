@@ -1,6 +1,10 @@
 import torch
 from torch import nn
+from torch.utils.data import DataLoader
+
+from DistillDataset import load_CIFAR_10, Embedder
 from config import Config
+from utils import get_transform_CIFAR_10
 
 
 class ViT(nn.Module):
@@ -79,6 +83,16 @@ class MultiHeadAttention(nn.Module):
 
 if __name__ == "__main__":
   config = Config()
+  # load dataset, transform from folder
+  cifar_10_transform = get_transform_CIFAR_10(input_size=225)
+  trainset, testset = load_CIFAR_10(path='./data', transform=cifar_10_transform)
+
+  # embed dataset (3 times 3 patches)
+  trainset = Embedder(dataset=trainset, config=config).consolidate()
+  config.dummy = trainset.__getitem__(0)
+  trainset = DataLoader(dataset=trainset, batch_size=config.batch_size)
+
+  # init model
   model = ViT(config=config)
 
 
