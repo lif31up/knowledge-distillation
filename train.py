@@ -4,10 +4,10 @@ from torch.optim import lr_scheduler
 from torch.utils.data import DataLoader
 from tqdm import tqdm
 
-from Embedder import load_CIFAR_10, Embedder
+from Embedder import load_MNIST_10, Embedder
 from config import Config, TEACH_SAVE_TO
 from model.ViT import ViT
-from utils import get_transform_CIFAR_10
+from utils import get_transform_MNIST_10
 
 
 def train(model:nn.Module, path: str, config: Config, trainset, device):
@@ -44,8 +44,8 @@ if __name__ == "__main__":
   config = Config()
   device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
   # load dataset, transform from folder
-  cifar_10_transform = get_transform_CIFAR_10(input_size=90)
-  trainset, testset = load_CIFAR_10(path='./data', transform=cifar_10_transform)
+  mnist_10_transform = get_transform_MNIST_10(input_size=90)
+  trainset, testset = load_MNIST_10(path='./data', transform=mnist_10_transform)
   # embed dataset (3 times 3 patches)
   trainset = Embedder(dataset=trainset, config=config).consolidate()
   config.dummy = trainset.__getitem__(0)[0]

@@ -3,7 +3,7 @@ from torch.utils.data import Dataset, DataLoader, Subset
 from tqdm import tqdm
 import torch.nn.functional as F
 import torchvision as tv
-from utils import get_transform_CIFAR_10
+from utils import get_transform_MNIST_10
 
 
 class Embedder(Dataset):
@@ -33,7 +33,7 @@ class Embedder(Dataset):
   # consolidate
 # Embedder
 
-def load_CIFAR_10(transform, path='./data', trainset_len=1000, testset_len=500):
+def load_MNIST_10(transform, path='./data', trainset_len=1000, testset_len=500):
   # trainset, testset are provided as torch.nn.utils.dataset
   trainset = tv.datasets.MNIST(root=path, train=True, download=True, transform=transform)
   trainset_indices = torch.randperm(trainset.__len__()).tolist()[:trainset_len]
@@ -42,7 +42,7 @@ def load_CIFAR_10(transform, path='./data', trainset_len=1000, testset_len=500):
   testset_indices = torch.randperm(testset.__len__()).tolist()[:testset_len]
   testset = Subset(dataset=testset, indices=testset_indices)
   return trainset, testset
-#load_CIFAR_10
+# load_MNIST_10
 
 
 if __name__ == "__main__":
@@ -50,8 +50,8 @@ if __name__ == "__main__":
   config = Config()
 
   # load dataset, transform from folder
-  cifar_10_transform = get_transform_CIFAR_10(input_size=225)
-  trainset, testset = load_CIFAR_10(path='./data', transform=cifar_10_transform)
+  cifar_10_transform = get_transform_MNIST_10(input_size=225)
+  trainset, testset = load_MNIST_10(path='./data', transform=cifar_10_transform)
 
   # embed dataset (3 times 3 patches)
   trainset = Embedder(dataset=trainset, config=config).consolidate()

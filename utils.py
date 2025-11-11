@@ -1,7 +1,7 @@
 import torchvision as tv
 
 
-def get_transform_CIFAR_10(input_size=135):
+def get_transform_MNIST_10(input_size=135):
   return tv.transforms.Compose([
     # 1. Augmentation for better generalization
     tv.transforms.RandomResizedCrop(input_size, scale=(0.8, 1.0)),
@@ -16,4 +16,4 @@ def get_transform_CIFAR_10(input_size=135):
       std=[0.229]
     ),
   ])  # TRANSFORM
-# get_transform_CIFAR_10
+# get_transform_MNIST_10
