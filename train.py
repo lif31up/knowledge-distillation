@@ -43,7 +43,6 @@ def train(model:nn.Module, path: str, config: Config, trainset, device):
 if __name__ == "__main__":
   config = Config()
   device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-
   # load dataset, transform from folder
   cifar_10_transform = get_transform_CIFAR_10(input_size=90)
   trainset, testset = load_CIFAR_10(path='./data', transform=cifar_10_transform)
@@ -53,8 +52,6 @@ if __name__ == "__main__":
   trainset = DataLoader(dataset=trainset, batch_size=config.batch_size)
   testset = Embedder(dataset=testset, config=config).consolidate()
   testset = DataLoader(dataset=testset, batch_size=config.batch_size)
-
   model = ViT(config=config)
-
   train(model=model, path=TEACH_SAVE_TO, config=config, trainset=trainset, device=device)
 # if __name__ == "__main__":

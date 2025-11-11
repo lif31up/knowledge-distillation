@@ -59,14 +59,11 @@ if __name__ == "__main__":
   trainset = DataLoader(dataset=trainset, batch_size=config.batch_size)
   testset = Embedder(dataset=testset, config=config).consolidate()
   testset = DataLoader(dataset=testset, batch_size=config.batch_size)
-
   student_config = copy.deepcopy(config)
   student_config.n_stacks = 3
-
   student = ViT(config=student_config)
   teacher_data = torch.load(f=TEACH_LOAD_FROM, map_location=torch.device('cpu'), weights_only=False)
   teacher = ViT(config)
   teacher.load_state_dict(teacher_data['sate'])
-
   distillate(student=student, teacher=teacher, dataset=trainset, config=student_config, path=STNDT_SAVE_TO, device=device)
 # if __name__ == "__main__":
