@@ -1,7 +1,7 @@
 import torchvision as tv
 
 
-def get_transform_CIFAR_10(input_size=225):
+def get_transform_CIFAR_10(input_size=135):
   return tv.transforms.Compose([
     # 1. Augmentation for better generalization
     tv.transforms.RandomResizedCrop(input_size, scale=(0.8, 1.0)),
@@ -12,8 +12,8 @@ def get_transform_CIFAR_10(input_size=225):
     tv.transforms.ToTensor(),
     # 3. Normalization using ImageNet statistics for pre-trained models
     tv.transforms.Normalize(
-      mean=[0.485, 0.456, 0.406],
-      std=[0.229, 0.224, 0.225]
+      mean=[0.485],
+      std=[0.229]
     ),
   ])  # TRANSFORM
 # get_transform_CIFAR_10

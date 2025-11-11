@@ -9,15 +9,15 @@ STNDT_LOAD_FROM = "./student.bin"
 
 class Config:
   def __init__(self, is_teacher=False):
-    self.iters = 40
+    self.iters = 50
     self.batch_size = 16
     self.dataset_len, self.testset_len = 1000, 500
     self.dummy = None
 
-    self.n_heads = 75
+    self.n_heads = 3
     self.n_stacks = 6
     self.n_hidden = 3
-    self.dim = 16875
+    self.dim = 900
     self.output_dim = 10
     self.bias = True
 
@@ -39,9 +39,3 @@ def init_weights(m):
     nn.init.xavier_uniform_(m.weight)
     if m.bias is not None: nn.init.zeros_(m.bias)
 # init_weights
-
-
-if __name__ == "__main__":
-  config = Config()
-  dataset = torch.utils.data.DataLoader(config.trainset, batch_size=config.batch_size, shuffle=True)
-# if __name__ == "__main__":

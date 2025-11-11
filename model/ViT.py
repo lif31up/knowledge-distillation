@@ -1,7 +1,7 @@
 import torch
 from torch import nn
 from torch.utils.data import DataLoader
-from DistillDataset import load_CIFAR_10, Embedder
+from Embedder import load_CIFAR_10, Embedder
 from config import Config
 from utils import get_transform_CIFAR_10
 

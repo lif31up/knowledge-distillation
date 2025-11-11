@@ -18,7 +18,7 @@ class Embedder(Dataset):
   def __getitem__(self, item):
     if self.is_consolidated: return self.dataset[item][0], self.dataset[item][1]
     feature, label = self.dataset[item]
-    patches = feature.unfold(1, 75, 75).unfold(2, 75, 75).permute(1, 2, 0, 3, 4)
+    patches = feature.unfold(1, 30, 30).unfold(2, 30, 30).permute(1, 2, 0, 3, 4)
     flatten_patches = torch.reshape(input=patches, shape=(9, -1))
     label = F.one_hot(torch.tensor(label), num_classes=10).float()
     return flatten_patches, label
@@ -35,10 +35,10 @@ class Embedder(Dataset):
 
 def load_CIFAR_10(transform, path='./data', trainset_len=1000, testset_len=500):
   # trainset, testset are provided as torch.nn.utils.dataset
-  trainset = tv.datasets.CIFAR10(root=path, train=True, download=True, transform=transform)
+  trainset = tv.datasets.MNIST(root=path, train=True, download=True, transform=transform)
   trainset_indices = torch.randperm(trainset.__len__()).tolist()[:trainset_len]
   trainset = Subset(dataset=trainset, indices=trainset_indices)
-  testset = tv.datasets.CIFAR10(root=path, train=False, download=True, transform=transform)
+  testset = tv.datasets.MNIST(root=path, train=False, download=True, transform=transform)
   testset_indices = torch.randperm(testset.__len__()).tolist()[:testset_len]
   testset = Subset(dataset=testset, indices=testset_indices)
   return trainset, testset
