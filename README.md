@@ -18,7 +18,7 @@ The Vision Transformer (ViT) attains excellent results when pretrained at suffic
 
 |            | ViT (6 stacks) | DistillViT (3 stacks) |
 |------------|----------------|-----------------------|
-| ACC (1000) | `91.8%`        | `91.8%`               |
+| ACC (1000) | `91.6%`        | `92.1%`               |
 
 ### Requirements
 To run the code on your own machine, `run pip install -r requirements.txt`.
