@@ -11,6 +11,12 @@ The Vision Transformer (ViT) attains excellent results when pretrained at suffic
 - **Task:** Image Recognition
 - **Dataset:** MNIST-10
 
+### Experiment on CoLab
+
+<a href="https://colab.research.google.com/drive/1l5MhNUO0_pNpVZSrC9G43yH5vlfwg6Gh?usp=sharing">
+  <img alt="colab" src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Google_Colaboratory_SVG_Logo.svg/2560px-Google_Colaboratory_SVG_Logo.svg.png" width="160"></img>
+</a>
+
 ### Requirements
 To run the code on your own machine, `run pip install -r requirements.txt`.
 ```text
