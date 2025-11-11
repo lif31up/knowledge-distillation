@@ -1,7 +1,6 @@
 import torch
 from torch import nn
 from torch.utils.data import DataLoader
-
 from DistillDataset import load_CIFAR_10, Embedder
 from config import Config
 from utils import get_transform_CIFAR_10
@@ -22,6 +21,7 @@ class ViT(nn.Module):
   # forward
 
   def _get_fc(self, dummy):
+    # dummy has no batch dim
     with torch.no_grad():
       for stack in self.stacks: dummy = stack(dummy)
     dummy = dummy.flatten(start_dim=0)
@@ -94,6 +94,7 @@ if __name__ == "__main__":
 
   # init model
   model = ViT(config=config)
+  model.get_fc(dummy=config.dummy)
 
-
+  print(f'model: {model}')
 # if __name__ == "__main__":

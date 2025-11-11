@@ -1,5 +1,4 @@
 import torch
-import torchvision as tv
 from torch import nn
 
 # path vars
@@ -15,11 +14,11 @@ class Config:
     self.dataset_len, self.testset_len = 1000, 500
     self.dummy = None
 
-    self.n_heads = 32
+    self.n_heads = 75
     self.n_stacks = 6
     self.n_hidden = 3
     self.dim = 16875
-    self.output_dim = 2
+    self.output_dim = 10
     self.bias = True
 
     self.dropout = 0.1
