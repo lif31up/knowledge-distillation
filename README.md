@@ -7,7 +7,7 @@ Distillation (or Knowledge Distillation) is a model compression technique where 
 
 - **Task:** Image Recognition
 - **Dataset:** CIFAR-10
-- **Pretrained Model:** ViT
+- **Pretrained Model:** `google/vit-base-patch16-224`
 
 
 ### Requirements
