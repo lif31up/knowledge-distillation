@@ -7,22 +7,31 @@ from utils import get_transform_MNIST_10
 
 
 class ViT(nn.Module):
-  def __init__(self, config: Config):
+  def __init__(self, config):
     super(ViT, self).__init__()
     self.config = config
     self.stacks = nn.ModuleList([EncoderStack(self.config) for _ in range(config.n_stacks)])
     self.flatten = nn.Flatten(start_dim=1)
+    self.cls = nn.Parameter(torch.zeros(config.dim))
     self.fc = self._get_fc(self.config.dummy).apply(self.config.init_weights)
   # __init__
 
+  def add_cls(self, x):
+    cls = self.cls.expand(x.shape[0], 1, -1)
+    x = torch.cat([x, cls], dim=1)
+    return x
+  # add_cls
+
   def forward(self, x):
+    x = self.add_cls(x)
     for stack in self.stacks: x = stack(x)
     return self.fc(self.flatten(x))
   # forward
 
   def _get_fc(self, dummy):
-    # dummy has no batch dim
     with torch.no_grad():
+      cls = self.cls.expand(1, -1)
+      dummy = torch.cat([dummy, cls], dim=0)
       for stack in self.stacks: dummy = stack(dummy)
     dummy = dummy.flatten(start_dim=0)
     return nn.Linear(dummy.shape[0], self.config.output_dim, bias=self.config.bias)
