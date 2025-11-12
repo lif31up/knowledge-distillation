@@ -3,7 +3,6 @@ from torch import nn
 from torch.optim import lr_scheduler
 from torch.utils.data import DataLoader
 from tqdm import tqdm
-
 from Embedder import load_MNIST_10, Embedder
 from config import Config, TEACH_SAVE_TO
 from model.ViT import ViT
